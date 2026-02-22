@@ -354,6 +354,52 @@ Request Body:
 
 ## Database Schema
 
+### Entity Relationship Diagram
+
+```
++------------------+       +------------------+       +------------------+
+|      USER        |       |      SCHOOL      |       |    CLASSROOM     |
++------------------+       +------------------+       +------------------+
+| _id: ObjectId    |       | _id: ObjectId    |       | _id: ObjectId    |
+| email: String    |       | name: String     |       | name: String     |
+| password: String |       | address: String  |       | capacity: Number |
+| username: String |       | contactEmail:    |       | resources: Array |
+| role: String     |       |   String         |       | isActive: Boolean|
+| schoolId: ObjectId------>| contactPhone:    |<------| schoolId: ObjectId
+| isActive: Boolean|       |   String         |       | createdBy: ObjectId
+| createdAt: Date  |       | createdBy:       |       | createdAt: Date  |
+| updatedAt: Date  |       |   ObjectId       |       | updatedAt: Date  |
++------------------+       | isActive: Boolean|       +------------------+
+        |                  | createdAt: Date  |               |
+        |                  | updatedAt: Date  |               |
+        |                  +------------------+               |
+        |                          |                          |
+        |                          |                          |
+        |                          v                          |
+        |                  +------------------+               |
+        |                  |     STUDENT      |               |
+        |                  +------------------+               |
+        |                  | _id: ObjectId    |               |
+        |                  | firstName: String|               |
+        |                  | lastName: String |               |
+        |                  | email: String    |               |
+        +----------------->| schoolId: ObjectId               |
+                           | classroomId: ObjectId<-----------+
+                           | enrollmentDate:  |
+                           |   Date           |
+                           | isActive: Boolean|
+                           | createdAt: Date  |
+                           | updatedAt: Date  |
+                           +------------------+
+
+Relationships:
+- User (school_admin) --> School: Many-to-One (admin belongs to one school)
+- School --> User (superadmin): Many-to-One (created by superadmin)
+- Classroom --> School: Many-to-One (classroom belongs to one school)
+- Student --> School: Many-to-One (student enrolled in one school)
+- Student --> Classroom: Many-to-One (student assigned to one classroom)
+```
+
 ### User
 | Field | Type | Description |
 |-------|------|-------------|
