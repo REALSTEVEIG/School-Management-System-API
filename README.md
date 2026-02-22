@@ -60,20 +60,10 @@ SERVICE_NAME=school-management-api
 ENV=development
 USER_PORT=5111
 
-REDIS_URI=redis://127.0.0.1:6379
-CORTEX_REDIS=redis://127.0.0.1:6379
-CORTEX_PREFIX=school_mgmt
-CORTEX_TYPE=school-management-api
-OYSTER_REDIS=redis://127.0.0.1:6379
-OYSTER_PREFIX=school_mgmt_oyster
-CACHE_REDIS=redis://127.0.0.1:6379
-CACHE_PREFIX=school_mgmt:ch
-
 MONGO_URI=mongodb://localhost:27017/school-management
 
 LONG_TOKEN_SECRET=your_long_token_secret_key_here
 SHORT_TOKEN_SECRET=your_short_token_secret_key_here
-NACL_SECRET=your_nacl_secret_key_here
 ```
 
 ## Running the Application
