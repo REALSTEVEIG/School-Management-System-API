@@ -90,7 +90,18 @@ npm start
 
 ## API Documentation
 
-Base URL: `http://localhost:5111/api`
+### Swagger UI
+
+Interactive API documentation is available at:
+```
+http://localhost:5111/api-docs
+```
+
+### Base URL
+
+```
+http://localhost:5111/api
+```
 
 ### Authentication Endpoints
 

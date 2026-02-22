@@ -84,7 +84,7 @@ describe('Classroom Manager', () => {
             const result = await classroomManager.getClassroom({
                 __auth: superadminAuth,
                 __schoolAdmin: superadminAuth,
-                classroomId: classroom._id.toString()
+                __query: { classroomId: classroom._id.toString() }
             });
 
             expect(result.name).toBe('Get Test Class');
@@ -111,7 +111,7 @@ describe('Classroom Manager', () => {
             const result = await classroomManager.getClassrooms({
                 __auth: superadminAuth,
                 __schoolAdmin: superadminAuth,
-                schoolId: testSchool._id.toString()
+                __query: { schoolId: testSchool._id.toString() }
             });
 
             expect(result.length).toBe(2);
@@ -180,7 +180,7 @@ describe('Classroom Manager', () => {
             const result = await classroomManager.getClassroom({
                 __auth: schoolAdminAuth,
                 __schoolAdmin: schoolAdminAuth,
-                classroomId: classroom._id.toString()
+                __query: { classroomId: classroom._id.toString() }
             });
 
             expect(result.name).toBe('Admin Test Class');
@@ -211,7 +211,7 @@ describe('Classroom Manager', () => {
             const result = await classroomManager.getClassroom({
                 __auth: schoolAdminAuth,
                 __schoolAdmin: schoolAdminAuth,
-                classroomId: classroom._id.toString()
+                __query: { classroomId: classroom._id.toString() }
             });
 
             expect(result.error).toBe('Access denied to this classroom');

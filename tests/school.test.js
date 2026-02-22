@@ -61,7 +61,7 @@ describe('School Manager', () => {
             const result = await schoolManager.getSchool({
                 __auth: superadminAuth,
                 __superadmin: superadminAuth,
-                schoolId: school._id.toString()
+                __query: { schoolId: school._id.toString() }
             });
 
             expect(result.name).toBe('Get Test School');
@@ -71,7 +71,7 @@ describe('School Manager', () => {
             const result = await schoolManager.getSchool({
                 __auth: superadminAuth,
                 __superadmin: superadminAuth,
-                schoolId: new mongoose.Types.ObjectId().toString()
+                __query: { schoolId: new mongoose.Types.ObjectId().toString() }
             });
 
             expect(result.error).toBe('School not found');

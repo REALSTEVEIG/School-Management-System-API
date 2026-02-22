@@ -45,7 +45,8 @@ module.exports = class Classroom {
         return classroom;
     }
 
-    async getClassroom({ __auth, __schoolAdmin, classroomId }) {
+    async getClassroom({ __auth, __schoolAdmin, __query }) {
+        const { classroomId } = __query || {};
         if (!classroomId) return { error: 'Classroom ID is required' };
 
         const classroom = await this.mongomodels.Classroom.findById(classroomId);
@@ -58,7 +59,8 @@ module.exports = class Classroom {
         return classroom;
     }
 
-    async getClassrooms({ __auth, __schoolAdmin, schoolId }) {
+    async getClassrooms({ __auth, __schoolAdmin, __query }) {
+        const { schoolId } = __query || {};
         const targetSchoolId = __auth.role === 'superadmin' ? schoolId : __auth.schoolId;
 
         if (!targetSchoolId) return { error: 'School ID is required' };

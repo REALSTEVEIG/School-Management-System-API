@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('../../config/swagger');
 const app = express();
 
 module.exports = class UserServer {
@@ -16,7 +18,9 @@ module.exports = class UserServer {
     }
 
     run() {
-        app.use(helmet());
+        app.use(helmet({
+            contentSecurityPolicy: false
+        }));
 
         app.use(cors({ origin: '*' }));
 
@@ -33,6 +37,15 @@ module.exports = class UserServer {
         app.use(express.urlencoded({ extended: true, limit: '10kb' }));
         app.use('/static', express.static('public'));
 
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+            explorer: true,
+            customSiteTitle: 'School Management API'
+        }));
+
+        app.get('/health', (req, res) => {
+            res.status(200).json({ ok: true, message: 'Server is healthy' });
+        });
+
         app.use((err, req, res, next) => {
             console.error(err.stack);
             res.status(500).json({ ok: false, message: 'Internal server error' });
@@ -43,6 +56,7 @@ module.exports = class UserServer {
         let server = http.createServer(app);
         server.listen(this.config.dotEnv.USER_PORT, () => {
             console.log(`${(this.config.dotEnv.SERVICE_NAME).toUpperCase()} is running on port: ${this.config.dotEnv.USER_PORT}`);
+            console.log(`Swagger docs available at: http://localhost:${this.config.dotEnv.USER_PORT}/api-docs`);
         });
     }
 };

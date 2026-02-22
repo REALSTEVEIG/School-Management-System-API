@@ -18,13 +18,17 @@ services:
       - CACHE_REDIS=redis://redis:6379
       - CACHE_PREFIX=school_mgmt:ch
       - MONGO_URI=mongodb://mongo:27017/school-management
-      - LONG_TOKEN_SECRET=${LONG_TOKEN_SECRET}
-      - SHORT_TOKEN_SECRET=${SHORT_TOKEN_SECRET}
-      - NACL_SECRET=${NACL_SECRET}
+      - LONG_TOKEN_SECRET=your_long_token_secret_key_change_in_production_123
+      - SHORT_TOKEN_SECRET=your_short_token_secret_key_change_in_production_456
+      - NACL_SECRET=your_nacl_secret_key_change_in_production_789
     depends_on:
-      - mongo
-      - redis
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
+    networks:
+      - school-network
 
   mongo:
     image: mongo:6
@@ -33,6 +37,14 @@ services:
     volumes:
       - mongo_data:/data/db
     restart: unless-stopped
+    networks:
+      - school-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   redis:
     image: redis:7-alpine
@@ -41,6 +53,17 @@ services:
     volumes:
       - redis_data:/data
     restart: unless-stopped
+    networks:
+      - school-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  school-network:
+    driver: bridge
 
 volumes:
   mongo_data:

@@ -103,7 +103,7 @@ describe('Student Manager', () => {
             const result = await studentManager.getStudent({
                 __auth: superadminAuth,
                 __schoolAdmin: superadminAuth,
-                studentId: student._id.toString()
+                __query: { studentId: student._id.toString() }
             });
 
             expect(result.firstName).toBe('Get');
@@ -130,7 +130,7 @@ describe('Student Manager', () => {
             const result = await studentManager.getStudents({
                 __auth: superadminAuth,
                 __schoolAdmin: superadminAuth,
-                schoolId: testSchool._id.toString()
+                __query: { schoolId: testSchool._id.toString() }
             });
 
             expect(result.length).toBe(2);
@@ -156,8 +156,10 @@ describe('Student Manager', () => {
             const result = await studentManager.getStudents({
                 __auth: superadminAuth,
                 __schoolAdmin: superadminAuth,
-                schoolId: testSchool._id.toString(),
-                classroomId: testClassroom._id.toString()
+                __query: {
+                    schoolId: testSchool._id.toString(),
+                    classroomId: testClassroom._id.toString()
+                }
             });
 
             expect(result.length).toBe(1);

@@ -30,7 +30,8 @@ module.exports = class School {
         return school;
     }
 
-    async getSchool({ __auth, __superadmin, schoolId }) {
+    async getSchool({ __auth, __superadmin, __query }) {
+        const { schoolId } = __query || {};
         if (!schoolId) return { error: 'School ID is required' };
 
         const school = await this.mongomodels.School.findById(schoolId);
