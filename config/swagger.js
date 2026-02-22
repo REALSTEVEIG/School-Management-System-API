@@ -1,4 +1,25 @@
+require('dotenv').config();
 const swaggerJsdoc = require('swagger-jsdoc');
+
+const ENV = process.env.ENV || 'development';
+const USER_PORT = process.env.USER_PORT || 5111;
+const API_BASE_URL = process.env.API_BASE_URL;
+
+const servers = [];
+
+if (API_BASE_URL) {
+    servers.push({
+        url: API_BASE_URL,
+        description: 'Production server'
+    });
+}
+
+if (ENV !== 'production') {
+    servers.push({
+        url: `http://localhost:${USER_PORT}`,
+        description: 'Development server'
+    });
+}
 
 const options = {
     definition: {
@@ -11,12 +32,7 @@ const options = {
                 name: 'API Support'
             }
         },
-        servers: [
-            {
-                url: 'http://localhost:5111',
-                description: 'Development server'
-            }
-        ],
+        servers: servers.length > 0 ? servers : [{ url: `http://localhost:${USER_PORT}`, description: 'Development server' }],
         components: {
             securitySchemes: {
                 bearerAuth: {
