@@ -1,15 +1,20 @@
 module.exports = {
     register: [
         {
-            model: 'username',
+            path: 'username',
+            type: 'string',
+            length: { min: 3, max: 50 },
             required: true
         },
         {
-            model: 'email',
+            path: 'email',
+            type: 'string',
             required: true
         },
         {
-            model: 'password',
+            path: 'password',
+            type: 'string',
+            length: { min: 6, max: 100 },
             required: true
         },
         {
@@ -21,11 +26,13 @@ module.exports = {
     ],
     login: [
         {
-            model: 'email',
+            path: 'email',
+            type: 'string',
             required: true
         },
         {
-            model: 'password',
+            path: 'password',
+            type: 'string',
             required: true
         }
     ]

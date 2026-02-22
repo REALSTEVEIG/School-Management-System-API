@@ -13,8 +13,8 @@ module.exports = {
             required: true
         },
         {
-            model: 'email',
             path: 'contactEmail',
+            type: 'string',
             required: true
         },
         {
@@ -36,8 +36,8 @@ module.exports = {
             length: { min: 5, max: 300 }
         },
         {
-            model: 'email',
-            path: 'contactEmail'
+            path: 'contactEmail',
+            type: 'string'
         },
         {
             path: 'contactPhone',

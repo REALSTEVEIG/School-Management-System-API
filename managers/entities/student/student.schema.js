@@ -13,7 +13,8 @@ module.exports = {
             required: true
         },
         {
-            model: 'email',
+            path: 'email',
+            type: 'string',
             required: true
         }
     ],
@@ -29,7 +30,8 @@ module.exports = {
             length: { min: 1, max: 50 }
         },
         {
-            model: 'email'
+            path: 'email',
+            type: 'string'
         }
     ]
 };
