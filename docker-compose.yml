@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   api:
     build: .
@@ -9,22 +7,11 @@ services:
       - SERVICE_NAME=school-management-api
       - ENV=production
       - USER_PORT=5111
-      - REDIS_URI=redis://redis:6379
-      - CORTEX_REDIS=redis://redis:6379
-      - CORTEX_PREFIX=school_mgmt
-      - CORTEX_TYPE=school-management-api
-      - OYSTER_REDIS=redis://redis:6379
-      - OYSTER_PREFIX=school_mgmt_oyster
-      - CACHE_REDIS=redis://redis:6379
-      - CACHE_PREFIX=school_mgmt:ch
       - MONGO_URI=mongodb://mongo:27017/school-management
-      - LONG_TOKEN_SECRET=your_long_token_secret_key_change_in_production_123
-      - SHORT_TOKEN_SECRET=your_short_token_secret_key_change_in_production_456
-      - NACL_SECRET=your_nacl_secret_key_change_in_production_789
+      - LONG_TOKEN_SECRET=your_long_token_secret_change_in_production_123
+      - SHORT_TOKEN_SECRET=your_short_token_secret_change_in_production_456
     depends_on:
       mongo:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     restart: unless-stopped
     networks:
@@ -46,25 +33,9 @@ services:
       retries: 5
       start_period: 10s
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    restart: unless-stopped
-    networks:
-      - school-network
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
 networks:
   school-network:
     driver: bridge
 
 volumes:
   mongo_data:
-  redis_data:
