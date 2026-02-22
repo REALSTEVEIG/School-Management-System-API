@@ -42,6 +42,5 @@ const studentSchema = new mongoose.Schema({
 
 studentSchema.index({ schoolId: 1 });
 studentSchema.index({ classroomId: 1 });
-studentSchema.index({ email: 1 });
 
 module.exports = mongoose.model('Student', studentSchema);

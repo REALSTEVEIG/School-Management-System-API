@@ -18,6 +18,10 @@ module.exports = class UserServer {
     }
 
     run() {
+        if (this.config.dotEnv.ENV === 'production') {
+            app.set('trust proxy', 1);
+        }
+
         app.use(helmet({
             contentSecurityPolicy: false
         }));
@@ -29,7 +33,8 @@ module.exports = class UserServer {
             max: 100,
             standardHeaders: true,
             legacyHeaders: false,
-            message: { ok: false, message: 'Too many requests, please try again later' }
+            message: { ok: false, message: 'Too many requests, please try again later' },
+            validate: { xForwardedForHeader: false }
         });
         app.use(limiter);
 
